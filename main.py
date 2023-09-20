@@ -77,10 +77,8 @@ class Cache(RAM):
     def esta_em_cache(self, ender):
         r, t, w = self.decompor_endereco(ender)
         if self.cache_lines[r].tag == t:
-            #print("Cache HIT: {}\n".format(ender))
             return True
         else:
-            #print("Cache MISS: {}\n".format(ender))
             return False
 
     def decompor_endereco(self, ender):
@@ -144,13 +142,13 @@ class CPU:
 
 try:
     io = IO()
-    ram = RAM(24)  # 2K de RAM (2**11)
-    cache = Cache(4096, 32, ram)  # total cache = 128, cacheline = 16 palavras
+    ram = RAM(11)   # 2K de RAM (2**11)
+    cache = Cache(128, 16, ram) # total cache = 128, cacheline = 16 palavras
     cpu = CPU(cache, io)
 
-    inicio = 10560325
+    inicio = 0;
     ram.write(inicio, 110)
-    ram.write(inicio + 1, 130)
+    ram.write(inicio+1, 130)
     cpu.run(inicio)
 except EnderecoInvalido as e:
     print("Endereco inválido:", e.ender, file=sys.stderr)
