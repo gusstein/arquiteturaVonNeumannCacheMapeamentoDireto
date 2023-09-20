@@ -76,9 +76,11 @@ class Cache(RAM):
 
     def esta_em_cache(self, ender):
         r, t, w = self.decompor_endereco(ender)
-        if self.cache_lines[r].cache_line[w] == t:
+        if self.cache_lines[r].tag == t:
+            #print("Cache HIT: {}\n".format(ender))
             return True
         else:
+            #print("Cache MISS: {}\n".format(ender))
             return False
 
     def decompor_endereco(self, ender):
@@ -146,7 +148,7 @@ try:
     cache = Cache(4096, 32, ram)  # total cache = 128, cacheline = 16 palavras
     cpu = CPU(cache, io)
 
-    inicio = 10560325;
+    inicio = 10560325
     ram.write(inicio, 110)
     ram.write(inicio + 1, 130)
     cpu.run(inicio)
